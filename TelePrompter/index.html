@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>টেলিপ্রম্পটার</title>
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- PDF.js for PDF text extraction -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
+    
+    <!-- Mammoth.js for DOCX text extraction -->
+    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
+    
+    <!-- Your Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white overflow-hidden">
+    
+    <!-- Animated Background Elements -->
+    <div class="animated-bg">
+        <!-- Background bubbles and shapes -->
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="star-bg"></div>
+        <div class="star-bg"></div>
+        <div class="star-bg"></div>
+        <div class="circle-bg"></div>
+        <div class="circle-bg"></div>
+        
+        <!-- Floating shapes in front -->
+        <div class="floating-shape circle"></div>
+        <div class="floating-shape circle"></div>
+        <div class="floating-shape star"></div>
+        <div class="floating-shape star"></div>
+        <div class="floating-shape triangle"></div>
+        <div class="floating-shape square"></div>
+        <div class="floating-shape hexagon"></div>
+        <div class="cursor-trail"></div>
+    </div>
+
+    <!-- Language Toggle -->
+    <div class="absolute top-2 right-2 z-30">
+        <button id="langToggle" class="glass-effect hover:bg-white/20 px-2 py-1 rounded-md flex items-center gap-1.5 transition-all duration-300 hover:scale-105 text-xs">
+            <i class="fas fa-language text-xs"></i>
+            <span id="langText" class="text-xs font-medium">EN</span>
+        </button>
+    </div>
+
+    <!-- Editor View -->
+    <main id="editor-view" class="p-4 md:p-8 relative z-20">
+        <h1 id="mainTitle" class="text-2xl md:text-3xl font-bold text-center mb-6 mt-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-cyan-400 animate-gradient">টেলিপ্রম্পটার</h1>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Script Area -->
+            <div class="lg:col-span-2">
+                <div class="glass-effect p-6 rounded-2xl backdrop-blur-lg">
+                    <div class="flex justify-between items-center mb-4">
+                        <label for="script" id="scriptLabel" class="text-xl font-medium text-white/90">আপনার স্ক্রিপ্ট</label>
+                        <div class="flex gap-2">
+                            <label for="fileInput" class="cursor-pointer bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-4 py-2 rounded-lg text-sm flex items-center gap-2 transition-all duration-300 hover:scale-105 shadow-lg">
+                            <i class="fas fa-file-upload"></i>
+                            <span id="uploadText">ফাইল আপলোড</span>
+                            </label>
+                            <input type="file" id="fileInput" accept=".pdf,.docx,.doc" class="hidden">
+                        </div>
+                    </div>
+                    <textarea id="script" rows="18" class="w-full p-4 bg-white/10 border border-white/20 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent text-white text-lg backdrop-blur-sm transition-all duration-300" placeholder="আপনার স্ক্রিপ্ট এখানে পেস্ট করুন..."></textarea>
+                    <div id="fileStatus" class="mt-2 text-sm text-white/70"></div>
+                </div>
+            </div>
+
+            <!-- Controls Area -->
+            <div class="glass-effect p-6 rounded-2xl backdrop-blur-lg">
+                <h2 id="settingsTitle" class="text-2xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">সেটিংস</h2>
+                <div class="space-y-6">
+                    <div>
+                        <label for="speed" id="speedLabel" class="block mb-2 text-sm font-medium text-white/80">স্ক্রোল গতি</label>
+                        <input type="range" id="speed" min="1" max="100" value="20" class="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer slider">
+                    </div>
+                    <div>
+                        <label for="fontSize" id="fontSizeLabel" class="block mb-2 text-sm font-medium text-white/80">ফন্টের আকার</label>
+                        <input type="range" id="fontSize" min="12" max="120" value="52" class="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer slider">
+                    </div>
+                    <div>
+                        <label for="lineSpacing" id="lineSpacingLabel" class="block mb-2 text-sm font-medium text-white/80">লাইনের ব্যবধান</label>
+                        <input type="range" id="lineSpacing" min="1" max="3" value="1.5" step="0.1" class="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer slider">
+                    </div>
+                    <div>
+                        <label for="margin" id="marginLabel" class="block mb-2 text-sm font-medium text-white/80">পাশের মার্জিন</label>
+                        <input type="range" id="margin" min="0" max="45" value="5" class="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer slider">
+                    </div>
+                    <div>
+                        <label id="alignLabel" class="block mb-2 text-sm font-medium text-white/80">টেক্সট অ্যালাইনমেন্ট</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button id="align-left" class="align-btn p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300 hover:scale-105"><i class="fas fa-align-left"></i></button>
+                            <button id="align-center" class="align-btn p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-300 hover:scale-105"><i class="fas fa-align-center"></i></button>
+                            <button id="align-right" class="align-btn p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300 hover:scale-105"><i class="fas fa-align-right"></i></button>
+                        </div>
+                    </div>
+                     <div>
+                        <label for="mirror" class="flex items-center cursor-pointer group">
+                            <div class="relative">
+                                <input type="checkbox" id="mirror" class="sr-only">
+                                <div class="block bg-white/20 w-14 h-8 rounded-full transition-all duration-300 group-hover:bg-white/30"></div>
+                                <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-all duration-300 shadow-lg"></div>
+                            </div>
+                            <div id="mirrorLabel" class="ml-3 text-white/80 text-sm font-medium">আয়না টেক্সট</div>
+                        </label>
+                    </div>
+                </div>
+                <button id="startBtn" class="w-full mt-8 py-4 px-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl">টেলিপ্রম্পটার শুরু করুন</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Copyright Footer -->
+    <footer class="fixed bottom-0 left-0 right-0 z-30 text-center py-3 glass-effect backdrop-blur-md">
+        <p class="text-sm text-white/80">
+            <i class="far fa-copyright"></i> <span id="copyrightYear">2025</span> 
+            <span class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-cyan-400">Ashis Rahman</span>
+        </p>
+        <p class="text-xs text-white/60 mt-1">
+            <span id="developedBy">Developed by</span> 
+            <span class="font-medium text-white/80">Ashis Rahman</span>
+        </p>
+    </footer>
+
+    <!-- Prompter View (Initially Hidden) -->
+    <div id="prompter-view" class="hidden">
+        <div id="prompter-text-container">
+            <div id="prompter-text"></div>
+        </div>
+        <div class="absolute top-1/2 left-0 w-full h-1 bg-red-500 opacity-75 transform -translate-y-1/2 pointer-events-none z-20"></div>
+        <button id="goBackBtn" class="absolute top-4 left-4 glass-effect hover:bg-white/20 text-white font-bold py-2 px-4 rounded-lg z-20 transition-all duration-300 hover:scale-105"><i class="fas fa-arrow-left mr-2"></i><span id="goBackText">ফিরে যান</span></button>
+        <div id="play-pause-indicator" class="absolute bottom-10 right-10 text-6xl opacity-0 transition-opacity duration-500 z-20">
+            <i class="fas fa-pause"></i>
+        </div>
+    </div>
+
+    <!-- Your Custom JavaScript -->
+    <script type="module" src="script.js"></script>
+</body>
+</html>

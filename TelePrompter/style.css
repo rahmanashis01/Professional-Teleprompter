@@ -1,0 +1,451 @@
+/* Custom styles for the Teleprompter application */
+
+body {
+    /* Use the Hind Siliguri font for better Bengali character rendering */
+    font-family: 'Hind Siliguri', sans-serif;
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 80px; /* Space for footer */
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Glass morphism effect */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* Animated gradient text */
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 3s ease infinite;
+}
+
+/* Animated Background */
+.animated-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Floating Shapes */
+.floating-shape {
+    position: absolute;
+    opacity: 0.1;
+    animation: float 20s infinite ease-in-out;
+}
+
+.floating-shape.circle {
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+}
+
+.floating-shape.star {
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 100px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+}
+
+.floating-shape.star:after {
+    content: '';
+    position: absolute;
+    left: -50px;
+    top: 35px;
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-top: 100px solid rgba(255, 255, 255, 0.2);
+}
+
+.floating-shape.triangle {
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 100px solid rgba(255, 255, 255, 0.15);
+}
+
+.floating-shape.square {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(45deg);
+}
+
+.floating-shape.hexagon {
+    width: 100px;
+    height: 55px;
+    background: rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.floating-shape.hexagon:before,
+.floating-shape.hexagon:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+}
+
+.floating-shape.hexagon:before {
+    bottom: 100%;
+    border-bottom: 27.5px solid rgba(255, 255, 255, 0.1);
+}
+
+.floating-shape.hexagon:after {
+    top: 100%;
+    border-top: 27.5px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Background Bubbles */
+.bubble {
+    position: absolute;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: bubbleFloat 15s infinite ease-in-out;
+    z-index: 5;
+}
+
+.bubble:nth-child(1) {
+    width: 80px;
+    height: 80px;
+    left: 10%;
+    animation-duration: 20s;
+    animation-delay: 0s;
+}
+
+.bubble:nth-child(2) {
+    width: 120px;
+    height: 120px;
+    left: 70%;
+    animation-duration: 25s;
+    animation-delay: 2s;
+}
+
+.bubble:nth-child(3) {
+    width: 60px;
+    height: 60px;
+    left: 40%;
+    animation-duration: 18s;
+    animation-delay: 4s;
+}
+
+.bubble:nth-child(4) {
+    width: 100px;
+    height: 100px;
+    left: 85%;
+    animation-duration: 22s;
+    animation-delay: 1s;
+}
+
+.bubble:nth-child(5) {
+    width: 90px;
+    height: 90px;
+    left: 25%;
+    animation-duration: 20s;
+    animation-delay: 3s;
+}
+
+/* Background Stars */
+.star-bg {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: starMove 30s linear infinite;
+    z-index: 5;
+}
+
+.star-bg:nth-child(6) {
+    top: 20%;
+    animation-duration: 25s;
+    animation-delay: 0s;
+}
+
+.star-bg:nth-child(7) {
+    top: 50%;
+    animation-duration: 30s;
+    animation-delay: 5s;
+}
+
+.star-bg:nth-child(8) {
+    top: 80%;
+    animation-duration: 28s;
+    animation-delay: 2s;
+}
+
+/* Background Circles */
+.circle-bg {
+    position: absolute;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: circleRotate 40s linear infinite;
+    z-index: 5;
+}
+
+.circle-bg:nth-child(9) {
+    width: 200px;
+    height: 200px;
+    top: 10%;
+    left: 60%;
+    animation-duration: 35s;
+}
+
+.circle-bg:nth-child(10) {
+    width: 150px;
+    height: 150px;
+    bottom: 20%;
+    left: 20%;
+    animation-duration: 40s;
+    animation-direction: reverse;
+}
+
+/* Background Animations */
+@keyframes bubbleFloat {
+    0% {
+        transform: translateY(100vh) scale(0);
+    }
+    10% {
+        transform: translateY(90vh) scale(1);
+    }
+    90% {
+        transform: translateY(10vh) scale(1);
+    }
+    100% {
+        transform: translateY(0vh) scale(0);
+    }
+}
+
+@keyframes starMove {
+    0% {
+        transform: translateX(-100px) translateY(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateX(calc(100vw + 100px)) translateY(-100px);
+        opacity: 0;
+    }
+}
+
+@keyframes circleRotate {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(1.1);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+/* Position floating shapes (in front) */
+.floating-shape:nth-child(11) { top: 10%; left: 10%; animation-delay: 0s; z-index: 15; }
+.floating-shape:nth-child(12) { top: 20%; right: 10%; animation-delay: 3s; animation-duration: 25s; z-index: 15; }
+.floating-shape:nth-child(13) { bottom: 30%; left: 20%; animation-delay: 5s; z-index: 15; }
+.floating-shape:nth-child(14) { bottom: 20%; right: 30%; animation-delay: 7s; animation-duration: 22s; z-index: 15; }
+.floating-shape:nth-child(15) { top: 50%; left: 50%; animation-delay: 10s; z-index: 15; }
+.floating-shape:nth-child(16) { top: 60%; right: 20%; animation-delay: 12s; animation-duration: 18s; z-index: 15; }
+.floating-shape:nth-child(17) { bottom: 10%; left: 40%; animation-delay: 15s; z-index: 15; }
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-100px) translateX(50px) rotate(90deg);
+    }
+    50% {
+        transform: translateY(50px) translateX(-30px) rotate(180deg);
+    }
+    75% {
+        transform: translateY(-50px) translateX(-50px) rotate(270deg);
+    }
+}
+
+/* Cursor Trail Effect */
+.cursor-trail {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, rgba(147, 51, 234, 0.5) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    transition: transform 0.1s ease;
+    z-index: 9999;
+}
+
+/* Custom Slider Styles */
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    background: linear-gradient(to right, rgba(147, 51, 234, 0.3) 0%, rgba(147, 51, 234, 0.3) var(--value), rgba(255, 255, 255, 0.2) var(--value), rgba(255, 255, 255, 0.2) 100%);
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 6px 20px rgba(147, 51, 234, 0.4);
+}
+
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+/* --- Editor View --- */
+.align-btn.active {
+    background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%) !important;
+}
+
+/* Custom toggle switch styles */
+input:checked ~ .dot {
+    transform: translateX(100%);
+    background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+}
+
+/* File upload status styles */
+#fileStatus {
+    transition: all 0.3s ease;
+}
+
+#fileStatus.success {
+    color: #10b981; /* green-500 */
+}
+
+#fileStatus.error {
+    color: #ef4444; /* red-500 */
+}
+
+#fileStatus.loading {
+    color: #3b82f6; /* blue-500 */
+}
+
+/* Language toggle animation */
+#langToggle {
+    transition: all 0.2s ease;
+}
+
+#langToggle:hover {
+    transform: translateY(-1px);
+}
+
+/* Textarea focus effect */
+textarea:focus {
+    box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.3);
+}
+
+/* Button hover effects */
+button {
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* --- Prompter View --- */
+#prompter-view {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    z-index: 10;
+    overflow: hidden;
+}
+
+#prompter-text-container {
+    position: absolute;
+    top: 100%; /* Start the text below the viewport */
+    width: 100%;
+    transition: top 0.1s linear;
+}
+
+#prompter-text {
+    color: #FFFFFF;
+    padding: 0 5%; /* Default padding, will be updated by JS */
+    white-space: pre-wrap; /* Preserve line breaks from textarea */
+    word-wrap: break-word;
+}
+
+#prompter-text.mirrored {
+    transform: scaleX(-1);
+}
+
+#play-pause-indicator.visible {
+    opacity: 0.5;
+}
