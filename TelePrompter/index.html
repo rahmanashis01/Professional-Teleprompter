@@ -20,7 +20,7 @@
     <!-- Your Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white overflow-hidden">
+<body class="bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white">
     
     <!-- Animated Background Elements -->
     <div class="animated-bg">
@@ -72,6 +72,20 @@
                             <input type="file" id="fileInput" accept=".pdf,.docx,.doc" class="hidden">
                         </div>
                     </div>
+                    
+                    <!-- Terminal Animation -->
+                    <div id="terminalAnimation" class="terminal-loader">
+                        <div class="terminal-header">
+                            <div class="terminal-title">টেলিপ্রম্পটার.exe</div>
+                            <div class="terminal-controls">
+                                <span class="control close"></span>
+                                <span class="control minimize"></span>
+                                <span class="control maximize"></span>
+                            </div>
+                        </div>
+                        <div class="text" id="typingText">আপনার উন্নত টেলিপ্রম্পটারে স্বাগতম!</div>
+                    </div>
+                    
                     <textarea id="script" rows="18" class="w-full p-4 bg-white/10 border border-white/20 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent text-white text-lg backdrop-blur-sm transition-all duration-300" placeholder="আপনার স্ক্রিপ্ট এখানে পেস্ট করুন..."></textarea>
                     <div id="fileStatus" class="mt-2 text-sm text-white/70"></div>
                 </div>
@@ -115,21 +129,47 @@
                             <div id="mirrorLabel" class="ml-3 text-white/80 text-sm font-medium">আয়না টেক্সট</div>
                         </label>
                     </div>
+                    
+                    <!-- Todo Checklist Section -->
+                    <div>
+                        <label class="block mb-3 text-sm font-medium text-white/80" id="todoLabel">টুডু তালিকা</label>
+                        <div class="space-y-3">
+                            <div class="colored-checkbox-item">
+                                <input type="checkbox" id="todo1" class="colored-checkbox" data-color="indigo">
+                                <label for="todo1" class="colored-checkbox-label">স্ক্রিপ্ট প্রস্তুত করুন</label>
+                            </div>
+                            <div class="colored-checkbox-item">
+                                <input type="checkbox" id="todo2" class="colored-checkbox" data-color="emerald">
+                                <label for="todo2" class="colored-checkbox-label">গতি সেট করুন</label>
+                            </div>
+                            <div class="colored-checkbox-item">
+                                <input type="checkbox" id="todo3" class="colored-checkbox" data-color="rose">
+                                <label for="todo3" class="colored-checkbox-label">ফন্ট সাইজ সামঞ্জস্য করুন</label>
+                            </div>
+                            <div class="colored-checkbox-item">
+                                <input type="checkbox" id="todo4" class="colored-checkbox" data-color="amber">
+                                <label for="todo4" class="colored-checkbox-label">টেলিপ্রম্পটার টেস্ট করুন</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <button id="startBtn" class="w-full mt-8 py-4 px-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl">টেলিপ্রম্পটার শুরু করুন</button>
+                <button id="startBtn" class="button realistic-button w-full mt-8">
+                    <div class="blob1"></div>
+                    <div class="inner">টেলিপ্রম্পটার শুরু করুন</div>
+                </button>
             </div>
         </div>
     </main>
 
     <!-- Copyright Footer -->
-    <footer class="fixed bottom-0 left-0 right-0 z-30 text-center py-3 glass-effect backdrop-blur-md">
-        <p class="text-sm text-white/80">
+    <footer class="fixed bottom-0 left-0 right-0 z-30 text-center py-2 glass-effect backdrop-blur-sm">
+        <p class="text-xs text-white/70">
             <i class="far fa-copyright"></i> <span id="copyrightYear">2025</span> 
-            <span class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-cyan-400">Ashis Rahman</span>
+            <span class="font-medium text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-cyan-400">Ashis Rahman</span>
         </p>
-        <p class="text-xs text-white/60 mt-1">
+        <p class="text-xs text-white/50 mt-0.5">
             <span id="developedBy">Developed by</span> 
-            <span class="font-medium text-white/80">Ashis Rahman</span>
+            <span class="font-normal text-white/60">Ashis Rahman</span>
         </p>
     </footer>
 
@@ -139,7 +179,12 @@
             <div id="prompter-text"></div>
         </div>
         <div class="absolute top-1/2 left-0 w-full h-1 bg-red-500 opacity-75 transform -translate-y-1/2 pointer-events-none z-20"></div>
-        <button id="goBackBtn" class="absolute top-4 left-4 glass-effect hover:bg-white/20 text-white font-bold py-2 px-4 rounded-lg z-20 transition-all duration-300 hover:scale-105"><i class="fas fa-arrow-left mr-2"></i><span id="goBackText">ফিরে যান</span></button>
+        <button id="goBackBtn" class="button realistic-button absolute top-4 left-4 z-20">
+            <div class="blob1"></div>
+            <div class="inner">
+                <i class="fas fa-arrow-left mr-2"></i><span id="goBackText">ফিরে যান</span>
+            </div>
+        </button>
         <div id="play-pause-indicator" class="absolute bottom-10 right-10 text-6xl opacity-0 transition-opacity duration-500 z-20">
             <i class="fas fa-pause"></i>
         </div>
