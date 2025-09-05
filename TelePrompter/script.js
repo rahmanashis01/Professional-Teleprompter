@@ -38,6 +38,11 @@ const translations = {
         marginLabel: 'পাশের মার্জিন',
         alignLabel: 'টেক্সট অ্যালাইনমেন্ট',
         mirrorLabel: 'আয়না টেক্সট',
+        todoLabel: 'টুডু তালিকা',
+        todo1: 'স্ক্রিপ্ট প্রস্তুত করুন',
+        todo2: 'গতি সেট করুন',
+        todo3: 'ফন্ট সাইজ সামঞ্জস্য করুন',
+        todo4: 'টেলিপ্রম্পটার টেস্ট করুন',
         startBtn: 'টেলিপ্রম্পটার শুরু করুন',
         goBackText: 'ফিরে যান',
         scriptPlaceholder: 'আপনার স্ক্রিপ্ট এখানে পেস্ট করুন...',
@@ -59,6 +64,11 @@ const translations = {
         marginLabel: 'Side Margin',
         alignLabel: 'Text Alignment',
         mirrorLabel: 'Mirror Text',
+        todoLabel: 'Todo List',
+        todo1: 'Prepare your script',
+        todo2: 'Set the speed',
+        todo3: 'Adjust font size',
+        todo4: 'Test teleprompter',
         startBtn: 'Start Teleprompter',
         goBackText: 'Go Back',
         scriptPlaceholder: 'Paste your script here...',
@@ -176,6 +186,11 @@ function updateLanguage() {
     document.getElementById('marginLabel').textContent = t.marginLabel;
     document.getElementById('alignLabel').textContent = t.alignLabel;
     document.getElementById('mirrorLabel').textContent = t.mirrorLabel;
+    document.getElementById('todoLabel').textContent = t.todoLabel;
+    document.querySelector('label[for="todo1"]').textContent = t.todo1;
+    document.querySelector('label[for="todo2"]').textContent = t.todo2;
+    document.querySelector('label[for="todo3"]').textContent = t.todo3;
+    document.querySelector('label[for="todo4"]').textContent = t.todo4;
     document.getElementById('startBtn').textContent = t.startBtn;
     document.getElementById('goBackText').textContent = t.goBackText;
     document.getElementById('developedBy').textContent = t.developedBy;
@@ -461,4 +476,117 @@ document.querySelectorAll('button').forEach(button => {
             setTimeout(() => createParticle(x, y), i * 50);
         }
     });
+});
+
+// --- Terminal Animation Logic ---
+const terminalAnimation = document.getElementById('terminalAnimation');
+const typingText = document.getElementById('typingText');
+const scriptTextarea = document.getElementById('script');
+
+// Messages to cycle through
+const terminalMessages = {
+    bn: [
+        'আপনার উন্নত টেলিপ্রম্পটারে স্বাগতম!',
+        'শুরু করতে এই টেক্সটটি আপনার নিজের স্ক্রিপ্ট দিয়ে প্রতিস্থাপন করুন।',
+        'ডানদিকের সেটিংস ব্যবহার করে গতি, ফন্টের আকার এবং আরও অনেক কিছু সামঞ্জস্য করুন।'
+    ],
+    en: [
+        'Welcome to your advanced teleprompter!',
+        'Start by replacing this text with your own script.',
+        'Use the settings on the right to adjust speed, font size and more.'
+    ]
+};
+
+let currentMessageIndex = 0;
+
+function cycleTerminalMessages() {
+    const currentLang = document.body.getAttribute('data-lang') || 'bn';
+    const messages = terminalMessages[currentLang];
+    
+    if (messages && messages.length > 0) {
+        typingText.textContent = messages[currentMessageIndex];
+        currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+    }
+}
+
+// Start cycling messages every 6 seconds (matches animation duration)
+setInterval(cycleTerminalMessages, 6000);
+
+// Hide terminal animation when user types in textarea
+scriptTextarea.addEventListener('input', function() {
+    if (this.value.length > 0) {
+        terminalAnimation.classList.add('hidden');
+    } else {
+        terminalAnimation.classList.remove('hidden');
+    }
+});
+
+// Show terminal animation when textarea is empty on focus out
+scriptTextarea.addEventListener('blur', function() {
+    if (this.value.length === 0) {
+        terminalAnimation.classList.remove('hidden');
+    }
+});
+
+// Initialize terminal animation
+cycleTerminalMessages();
+
+// --- Todo Checkbox Functionality ---
+function initializeTodoCheckboxes() {
+    const coloredCheckboxes = document.querySelectorAll('.colored-checkbox');
+    
+    // Load saved checkbox states from localStorage
+    coloredCheckboxes.forEach(checkbox => {
+        const savedState = localStorage.getItem(`todo_${checkbox.id}`);
+        if (savedState === 'true') {
+            checkbox.checked = true;
+        }
+    });
+    
+    // Add event listeners for state persistence
+    coloredCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            localStorage.setItem(`todo_${this.id}`, this.checked);
+            
+            // Add some visual feedback
+            if (this.checked) {
+                // Create a small celebration effect
+                createTodoCompleteEffect(this);
+            }
+        });
+    });
+}
+
+// Create a small particle effect when todo is completed
+function createTodoCompleteEffect(checkbox) {
+    const rect = checkbox.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    // Create small celebration particles
+    for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+            createParticle(centerX, centerY);
+        }, i * 100);
+    }
+}
+
+// Add progress tracking
+function updateTodoProgress() {
+    const totalTodos = document.querySelectorAll('.colored-checkbox').length;
+    const completedTodos = document.querySelectorAll('.colored-checkbox:checked').length;
+    const progress = Math.round((completedTodos / totalTodos) * 100);
+    
+    // You can add a progress indicator here if needed
+    console.log(`Todo Progress: ${completedTodos}/${totalTodos} (${progress}%)`);
+}
+
+// Initialize todo checkboxes when page loads
+initializeTodoCheckboxes();
+
+// Update progress whenever a checkbox changes
+document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('colored-checkbox')) {
+        updateTodoProgress();
+    }
 });
