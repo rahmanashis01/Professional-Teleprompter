@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "professional-teleprompter",
+  "compatibility_date": "2026-05-03",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "TelePrompter"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
